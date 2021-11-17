@@ -1,2 +1,2 @@
 # algoccs
-My adaptation of algopy in C and C#
+Some Algorithmic data structures and their associated functions
