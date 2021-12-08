@@ -22,7 +22,7 @@ For some (Trees and graphs):
 	- Breadth First Search (BFS)
 	
 Some others are:
-	- Insertion for index lists (normal lists) 
+	- Insertion for index lists/normal lists/vectors 
 	- Binary Search
 	- Enqueue, Dequeue and IsEmpty for queues
 	

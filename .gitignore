@@ -1,3 +1,7 @@
+src/cs/algocs/algocs/bin
+src/cs/algocs/algocs/obj
+src/cs/algocs/.idea
+
 # Prerequisites
 *.d
 
