@@ -1,10 +1,14 @@
 #include <stdlib.h>
 #include "list.h"
 
-void list_init(struct list *list)
+struct list* list_init(void)
 {
+    struct list *list = malloc(sizeof(struct list));
+
     list->data=0;
     list->next=NULL;
+
+    return list;
 }
 
 int list_is_empty(struct list *list)
@@ -21,38 +25,33 @@ size_t list_len(struct list *list)
     return i;
 }
 
-void list_push_front(struct list *list, struct list *elm)
+void list_push_front(struct list *list, void *data)
 {
-    elm->next=list->next;
-    list->next=elm;
+    struct list *new = list_init();
+    new->data = data;
+    new->next=list->next;
+    list->next=new;
 }
 
-struct list *list_pop_front(struct list *list)
+void* list_pop_front(struct list *list)
 {
     struct list *l = list->next;
+    void *data = NULL;
     if (l!=NULL)
     {
         list->next=l->next;
-        l->next = NULL;
+        data = l->data;
+        free(l);
     }
-    return l;
+    return data;
 }
 
-struct list *list_find(struct list *list, int value)
+struct list* list_find(struct list *list, void *value)
 {
     struct list *l = list;
     for(; l!=NULL && l->data!=value; l=l->next);
 
     return l;
-}
-
-struct list *list_lower_bound(struct list *list, int value)
-{
-   struct list *l = list;
-
-   for(; !(list_is_empty(l)) && (l->next)->data<value; l=l->next);
-
-   return l;
 }
 
 int list_is_sorted(struct list *list)
@@ -66,11 +65,14 @@ int list_is_sorted(struct list *list)
     return list_is_empty(l);
 }
 
-void list_insert(struct list *list, struct list *elm)
+void list_insert_at(struct list *list, size_t i, void *data)
 {
     struct list *l = list;
 
-    for(; !list_is_empty(l) && (l->next)->data<elm->data ; l=l->next);
+    for(; !list_is_empty(l) && i!=0; l=l->next);
+    struct list *elm = list_init();
+    elm->data=data;
+
     list_push_front(l, elm);
 }
 

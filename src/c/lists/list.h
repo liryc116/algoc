@@ -7,11 +7,11 @@
 struct list
 {
   struct list *next;
-  int data;
+  void* data;
 };
 
 // Initialize the sentinel of an empty list.
-void list_init(struct list *list);
+struct list* list_init(void);
 
 // Return true if the list is empty.
 // Otherwise, return false.
@@ -25,33 +25,25 @@ size_t list_len(struct list *list);
 // Insert 'elm' in front of the list, that is just after the sentinel.
 // Note that 'elm' is already an existing element.
 // You just have to insert it.
-void list_push_front(struct list *list, struct list *elm);
+void list_push_front(struct list *list, void *data);
 
 // Extract the first element (not the sentinel) of the list.
 // This operation removes the element from the list and returns it
 // (the caller is responsible for freeing it).
 // If the list is empty, the function returns NULL.
-struct list *list_pop_front(struct list *list);
+void* list_pop_front(struct list *list);
 
 // Search for the first element that contains 'value' and return it
 // (without removing it from the list).
 // The function returns NULL if the value is not in the list.
-struct list *list_find(struct list *list, int value);
-
-// Search for the first element that is greater than 'value'
-// and return the element that comes just before.
-// If the first element is greater than 'value', return the sentinel.
-// If no element is greater than 'value', return the last element.
-struct list *list_lower_bound(struct list *list, int value);
+struct list *list_find(struct list *list, void *value);
 
 // Return true if the list is sorted in increasing order.
 // Otherwise, return false.
 int list_is_sorted(struct list *list);
 
-// Insert 'elm' in the sorted list (keeping the list sorted).
-// Note that 'elm' is already an existing element.
-// You just have to insert it.
-void list_insert(struct list *list, struct list *elm);
+// Insert 'elm' in the list at the i index.
+void list_insert_at(struct list *list, size_t i, void *data);
 
 // Reverse the elements of the list (except for the sentinel).
 void list_rev(struct list *list);
@@ -59,5 +51,9 @@ void list_rev(struct list *list);
 // Split the list in half and put the second half in 'second'.
 // 'second' is an empty list (just a sentinel).
 void list_half_split(struct list *list, struct list *second);
+
+
+// Free the list and all its data (using the function in parameter).
+void list_free(struct list *list, void (*free_function)(void*));
 
 #endif
