@@ -2,6 +2,7 @@ src/cs/algocs/algocs/bin
 src/cs/algocs/algocs/obj
 src/cs/algocs/.idea
 *.sln
+*.xml
 
 # Prerequisites
 *.d
