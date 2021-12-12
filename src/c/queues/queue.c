@@ -17,7 +17,7 @@ int queue_is_empty(struct queue *queue);
 
 void queue_push(struct queue *queue, void* data)
 {
-    struct list *elm = list_init();
+    struct queue_elm *elm = malloc(sizeof(struct queue_elm));
     elm->data = data;
 
     if(queue->newest == NULL)
@@ -38,7 +38,7 @@ void* queue_pop(struct queue *queue)
     if(queue->newest==NULL)
         return NULL;
 
-    struct list *oldest = queue->newest->next;
+    struct queue_elm *oldest = queue->newest->next;
     void *data = oldest->data;
 
     if(oldest==queue->newest)

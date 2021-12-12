@@ -1,11 +1,15 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
-#include "../list/list.h"
-
 struct queue
 {
-    struct list* newest;
+    struct queue_elm *newest;
+}
+
+struct queue_elm
+{
+    void *data;
+    struct queue_elm *next;
 }
 
 // Initialize (and allocate) the queue structure.
@@ -25,4 +29,4 @@ void* queue_pop(struct queue *queue);
 // Free the queue and all its data (using the passed in function).
 void queue_free(struct queue *queue, void (*free_function)(void*));
 
-#endif
+#endif /* ! QUEUE_H */

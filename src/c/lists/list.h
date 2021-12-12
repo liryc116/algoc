@@ -1,6 +1,5 @@
-#ifndef _LIST_H_
-#define _LIST_H_
-
+#ifndef LIST_H
+#define LIST_H
 
 #include <stddef.h>
 
@@ -56,4 +55,4 @@ void list_half_split(struct list *list, struct list *second);
 // Free the list and all its data (using the function in parameter).
 void list_free(struct list *list, void (*free_function)(void*));
 
-#endif
+#endif /* ! LIST_H */

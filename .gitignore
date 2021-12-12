@@ -3,6 +3,7 @@ src/cs/algocs/algocs/obj
 src/cs/algocs/.idea
 *.sln
 *.xml
+*.swp
 
 # Prerequisites
 *.d
