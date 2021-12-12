@@ -1,7 +1,7 @@
-#ifndef _VECTOR_H_
-#define _VECTOR_H_
+#ifndef VECTOR_H
+#define VECTOR_H
 
-#include <stdlib.h>
+#include <stddef.h>
 
 struct vector
 {
@@ -68,4 +68,4 @@ void vector_insert(struct vector *v, size_t i, int x);
 // - Otherwise the function returns false (0).
 int vector_remove(struct vector *v, size_t i, int *x);
 
-#endif
+#endif /* ! VECTOR_H */
