@@ -4,8 +4,12 @@ Some Algorithmic data structures and their associated functions
 Such as:
 	- Linked Lists
 	- Derivates of linked lists (Queues and Stacks)
+    - Sets
+    - Dictionaries
+    - Vectors
+    - Matrixes
 	- Binary Trees
-	- BST (bin search trees) and AVL (Balanced BST)
+	- BST (bin search trees), AVL and RedBlackTrees (Balanced BST)
 	- General Trees
 	- B-Trees
 	- Graphs (both matrix and adjacent list implementation)

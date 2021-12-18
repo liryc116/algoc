@@ -10,7 +10,7 @@ struct list
 };
 
 // Initialize the sentinel of an empty list.
-struct list* list_init(void);
+struct list* list_new(void);
 
 // Return true if the list is empty.
 // Otherwise, return false.

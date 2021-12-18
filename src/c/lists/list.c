@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "list.h"
 
-struct list* list_init(void)
+struct list* list_new(void)
 {
     struct list *list = malloc(sizeof(struct list));
 
@@ -98,11 +98,12 @@ void list_rev(struct list *list)
 void list_half_split(struct list *list, struct list *second)
 {
     struct list *l=list->next;
-    struct list *half = l;
+    struct list *half = list;
     for(int i = 0; l!=NULL; l=l->next, i++)
     {
         if(i%2==0)
             half = half->next;
     }
-    second->next = half;
+    second->next = half->next;
+    half->next = NULL;
 }
