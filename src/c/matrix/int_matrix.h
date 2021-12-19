@@ -25,7 +25,7 @@ void matrix_scalar_mult(struct matrix *m, int scalar);
 
 /**
 ** Return a matrix of m1*m2 (in that order)
-** Return NULL if m1->height != m2->width
+** Return NULL if m1->width != m2->height
 */
 struct matrix* matrix_mult(struct matrix *m1, struct matrix *m2);
 
