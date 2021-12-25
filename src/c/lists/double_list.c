@@ -17,47 +17,15 @@ size_t d_list_len(struct d_list *l)
     return l->len;
 }
 
-void d_list_push_front(struct d_list *l, void *data)
+int d_list_is_empty(struct d_list *l)
 {
-    struct list_elm *new = malloc(sizeof(struct list_elm));
-
-    if(new==NULL)
-        errx(1, "Not enough memory");
-
-    new->next = l->head;
-    new->prev = NULL;
-    new->data = data;
-
-    l->len+=1;
-    if(l->head!=NULL)
-        l->head->prev = new;
-    l->head = new;
+    return l->head == NULL;
 }
 
-void d_list_push_back(struct d_list *l, void *data)
+void d_list_free(struct d_list *l, void(*free_function)(void*))
 {
-    struct list_elm *new = malloc(sizeof(struct list_elm));
+    while(!d_list_is_empty(l))
+        free_function(d_list_pop_front(l));
 
-    if(new==NULL)
-        errx(1, "Not enough memory");
-
-    new->next = NULL;
-    new->prev = l->tail;
-    new->data = data;
-
-    l->len+=1;
-    if(l->tail!=NULL)
-        l->tail->next = new;
-    l->tail = new;
+    free(d_list);
 }
-
-void d_list_insert_at(struct d_list *l, void *data, size_t n)
-{
-
-}
-
-void* d_list_pop_front(struct d_list *l);
-
-void* d_list_pop_back(struct d_list *l);
-
-void* d_list_remove_at(struct d_list *l, size_t n);

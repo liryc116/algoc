@@ -18,17 +18,8 @@ struct d_list* d_list_new(void);
 
 size_t d_list_len(struct d_list *l);
 
-void d_list_push_front(struct d_list *l, void *data);
+int d_list_is_empty(struct d_list *l);
 
-void d_list_push_back(struct d_list *l, void *data);
-
-void d_list_insert_at(struct d_list *l, void *data, size_t n);
-
-void* d_list_pop_front(struct d_list *l);
-
-void* d_list_pop_back(struct d_list *l);
-
-void* d_list_remove_at(struct d_list *l, size_t n);
-
+void d_list_free(struct d_list *l, void(*free_function)(void*));
 
 #endif /* ! DOUBLE_LIST_H */

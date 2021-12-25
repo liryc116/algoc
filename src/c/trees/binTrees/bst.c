@@ -27,19 +27,34 @@ void bst_insert(struct bst_tree *t, int data)
     }
 }
 
+// *max the max value of the tree
+struct bst_tree* bst_rem_max(struct bst_tree *t, int *max)
+{
+    if(t->right!=NULL)
+    {
+        t = t->right;
+        return t;
+    }
+    else
+    {
+        *max = t->key;
+        struct bst_tree *new = t->left;
+        free(t);
+        return new;
+    }
+}
+
 struct bst_tree* bst_rem(struct bst_tree *t)
 {
     if(t->right!=NULL)
     {
         if(t->left!=NULL)
         {
-            struct bst_tree *sub = t->right;
+            int *max;
 
-            while(sub->left!=NULL)
-                sub = sub->left;
+            bst_rem_max(t->left,max);
 
-            t->key = sub->key;
-            bst_remove(t->right, sub->key);
+            t->key = *max;
             return t;
         }
         else
@@ -73,5 +88,15 @@ int bst_remove(struct bst_tree *t, int data)
             return bst_remove(t->right, data);
         else
             return bst_remove(t->left, data);
+    }
+}
+
+void bst_free(struct bst_tree *t)
+{
+    if(t!=NULL)
+    {
+        bst_free(t->left);
+        bst_free(t->right);
+        free(t);
     }
 }

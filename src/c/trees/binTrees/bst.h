@@ -12,9 +12,8 @@ struct bst_tree* bst_new(int data);
 void bst_insert(struct bst_tree *t, int data);
 
 /**
-** Remoevs the first occurence of data in the tree
-** Return 1 if the value is removed
-** Return 0 if there was no data key in the tree
+** Removes the first occurence of data in the tree
+** If data is not in the tree do nothing
 */
 int bst_remove(struct bst_tree *t, int data);
 
