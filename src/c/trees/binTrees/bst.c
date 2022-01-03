@@ -1,8 +1,9 @@
 #include "bst.h"
+#include <stdlib.h>
 
-struct bst_tree* bst_new(int data = 0)
+struct bst_tree* bst_new(int data)
 {
-    struct bst_tree *new = calloc(1, sizeof(bst_tree));
+    struct bst_tree *new = calloc(1, sizeof(struct bst_tree));
 
     new->key = data;
 
@@ -50,7 +51,7 @@ struct bst_tree* bst_rem(struct bst_tree *t)
     {
         if(t->left!=NULL)
         {
-            int *max;
+            int *max = 0;
 
             bst_rem_max(t->left,max);
 

@@ -1,4 +1,5 @@
 #include "queue.h"
+#include <stdlib.h>
 
 struct queue* queue_init(void)
 {
@@ -9,7 +10,7 @@ struct queue* queue_init(void)
     return queue;
 }
 
-int queue_is_empty(struct queue *queue);
+int queue_is_empty(struct queue *queue)
 {
     return queue!=NULL && queue->newest == NULL;
 }

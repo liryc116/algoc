@@ -37,10 +37,6 @@ void* list_pop_front(struct list *list);
 // The function returns NULL if the value is not in the list.
 struct list *list_find(struct list *list, void *value);
 
-// Return true if the list is sorted in increasing order.
-// Otherwise, return false.
-int list_is_sorted(struct list *list);
-
 // Insert 'elm' in the list at the i index.
 void list_insert_at(struct list *list, size_t i, void *data);
 
@@ -50,7 +46,6 @@ void list_rev(struct list *list);
 // Split the list in half and put the second half in 'second'.
 // 'second' is an empty list (just a sentinel).
 void list_half_split(struct list *list, struct list *second);
-
 
 // Free the list and all its data (using the function in parameter).
 void list_free(struct list *list, void (*free_function)(void*));

@@ -1,5 +1,6 @@
-#include "matrix_manipulation.h"
-#include "matrix.h"
+#include "vector_manipulation.h"
+#include "vector.h"
+#include <stdlib.h>
 
 void vector_push(struct vector *v, void *x)
 {
@@ -13,8 +14,8 @@ void* vector_pop(struct vector *v)
 {
     if(v->size>0)
     {
-        void* x = v->data[v->size-1];
         v->size -= 1;
+        void* x = v->data[v->size];
         v->data[v->size] = NULL;
 
         return x;
@@ -28,7 +29,7 @@ void* vector_get(struct vector *v, size_t i)
     if (i < v->size)
         return v->data[i];
 
-	return NULL;
+    return NULL;
 }
 
 void vector_insert(struct vector *v, size_t i, void *x)

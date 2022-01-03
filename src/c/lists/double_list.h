@@ -14,6 +14,9 @@ struct list_elm{
     struct list_elm *next,*prev;
 };
 
+#include "d_list_insert.h"
+#include "d_list_remove.h"
+
 struct d_list* d_list_new(void);
 
 size_t d_list_len(struct d_list *l);

@@ -1,8 +1,9 @@
 #include "bin_tree.h"
-#include "../../queues/queues.h"
+#include "../../queues/queue.h"
+#include <stdlib.h>
 #include <stdio.h>
 
-struct bin_tree* bin_tree_new(void *data=NULL, void *left=NULL, void *right=NULL)
+struct bin_tree* bin_tree_new(void *data, void *left, void *right)
 {
     struct bin_tree *new = malloc(sizeof(struct bin_tree));
 
@@ -13,16 +14,16 @@ struct bin_tree* bin_tree_new(void *data=NULL, void *left=NULL, void *right=NULL
     return new;
 }
 
-void bin_tree_insert_left(struct bint_tree *tree, void *insert)
+void bin_tree_insert_left(struct bin_tree *tree, void *insert)
 {
-    struct bin_tree *new = new_bin_tree(insert);
+    struct bin_tree *new = bin_tree_new(insert, NULL, NULL);
 
     tree->left = new;
 }
 
-void bin_tree_insert_right(struct bint_tree *tree, void *insert)
+void bin_tree_insert_right(struct bin_tree *tree, void *insert)
 {
-    struct bin_tree *new = new_bin_tree(insert);
+    struct bin_tree *new = bin_tree_new(insert, NULL, NULL);
 
     tree->right = new;
 }
@@ -32,8 +33,8 @@ int bin_tree_height(struct bin_tree *tree)
     if(tree==NULL)
         return -1;
 
-    size_t right_height = bin_tree_height(tree->right);
-    size_t left_height = bin_tree_height(tree->left);
+    int right_height = bin_tree_height(tree->right);
+    int left_height = bin_tree_height(tree->left);
 
     if(right_height>left_height)
         return 1 + right_height;
@@ -69,11 +70,12 @@ void bin_tree_depth(struct bin_tree *tree)
 void bin_tree_breadth(struct bin_tree *tree)
 {
     struct queue *q = queue_init();
-    queue_push(tree);
+    if(tree!=NULL)
+        queue_push(q, tree);
 
     while(!queue_is_empty(q))
     {
-        struct tree *t = queue_pop(q);
+        struct bin_tree *t = queue_pop(q);
 
         // Treatment on t
 
@@ -82,4 +84,6 @@ void bin_tree_breadth(struct bin_tree *tree)
         if(t->right!=NULL)
             queue_push(q, t->right);
     }
+
+    queue_free(q, &free);
 }

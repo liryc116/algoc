@@ -1,7 +1,8 @@
 #include "avl.h"
 #include <err.h>
+#include <stdlib.h>
 
-struct avl_tree* avl_new(int key=0)
+struct avl_tree* avl_new(int key)
 {
     struct avl_tree *t = calloc(1, sizeof(struct avl_tree));
 
@@ -124,8 +125,7 @@ struct avl_tree* avl_ins(struct avl_tree *t, int key, int *dh)
 
 struct avl_tree* avl_insert(struct avl_tree *t, int key)
 {
-    int *x;
-    *x = 0;
+    int *x = 0;
     t = avl_ins(t, key, x);
     return t;
 }
@@ -179,9 +179,9 @@ struct avl_tree* avl_rem(struct avl_tree *t, int key, int *dh)
                 return t->left;
             else if (t->left==NULL)
                 return t->right;
-            int *max;
+            int *max = 0;
             t->left = avl_rem_max(t->left, max, dh);
-            t->key = max;
+            t->key = *max;
         }
 
         if(*dh!=0)
@@ -219,8 +219,7 @@ struct avl_tree* avl_rem(struct avl_tree *t, int key, int *dh)
 
 struct avl_tree* avl_remove(struct avl_tree *t, int key)
 {
-    int *x;
-    *x = 0;
+    int *x = 0;
     t = avl_rem(t, key, x);
     return t;
 }

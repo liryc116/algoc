@@ -1,12 +1,12 @@
 #include "matrix.h"
 #include <err.h>
+#include <stdlib.h>
+#include <string.h>
 
-struct matrix* matrix_new(size_t width=0, size_t height=0)
+struct matrix* matrix_new(size_t width, size_t height)
 {
-    if(data_size==0)
-        return NULL;
 
-    struct matrix *matrix = malloc(struct matrix);
+    struct matrix *matrix = malloc(sizeof(struct matrix));
 
     if(matrix==NULL)
         errx(1, "matrix_new: Not enough memory");
@@ -22,7 +22,7 @@ struct matrix* matrix_new(size_t width=0, size_t height=0)
     return matrix;
 }
 
-void matrix_add_rows(struct matrix *matrix, size_t n = 1)
+void matrix_add_rows(struct matrix *matrix, size_t n)
 {
     if(n!=0)
     {
@@ -33,7 +33,7 @@ void matrix_add_rows(struct matrix *matrix, size_t n = 1)
     }
 }
 
-void matrix_add_cols(struct matrix *matrix, size_t n = 1)
+void matrix_add_cols(struct matrix *matrix, size_t n)
 {
     if(n!=0)
     {

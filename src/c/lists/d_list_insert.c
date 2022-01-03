@@ -1,4 +1,6 @@
 #include "d_list_insert.h"
+#include <stdlib.h>
+#include <err.h>
 
 void d_list_push_front(struct d_list *l, void *data)
 {
@@ -15,6 +17,8 @@ void d_list_push_front(struct d_list *l, void *data)
     if(l->head!=NULL)
         l->head->prev = new;
     l->head = new;
+    if(l->tail==NULL)
+        l->tail = new;
 }
 
 void d_list_push_back(struct d_list *l, void *data)
@@ -32,6 +36,8 @@ void d_list_push_back(struct d_list *l, void *data)
     if(l->tail!=NULL)
         l->tail->next = new;
     l->tail = new;
+    if(l->head==NULL)
+        l->head = new;
 }
 
 void d_list_insert_at(struct d_list *l, void *data, size_t n)

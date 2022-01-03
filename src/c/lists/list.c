@@ -1,12 +1,9 @@
-#include <stdlib.h>
 #include "list.h"
+#include <stdlib.h>
 
 struct list* list_new(void)
 {
-    struct list *list = malloc(sizeof(struct list));
-
-    list->data=0;
-    list->next=NULL;
+    struct list *list = calloc(1, sizeof(struct list));
 
     return list;
 }
@@ -27,7 +24,7 @@ size_t list_len(struct list *list)
 
 void list_push_front(struct list *list, void *data)
 {
-    struct list *new = list_init();
+    struct list *new = list_new();
     new->data = data;
     new->next=list->next;
     list->next=new;
@@ -54,23 +51,12 @@ struct list* list_find(struct list *list, void *value)
     return l;
 }
 
-int list_is_sorted(struct list *list)
-{
-    struct list *l = list->next;
-    if(l==NULL)
-        return 1;
-
-    for(; !(list_is_empty(l)) && l->data<(l->next)->data; l=l->next);
-
-    return list_is_empty(l);
-}
-
 void list_insert_at(struct list *list, size_t i, void *data)
 {
     struct list *l = list;
 
     for(; !list_is_empty(l) && i!=0; l=l->next);
-    struct list *elm = list_init();
+    struct list *elm = list_new();
     elm->data=data;
 
     list_push_front(l, elm);
@@ -106,4 +92,12 @@ void list_half_split(struct list *list, struct list *second)
     }
     second->next = half->next;
     half->next = NULL;
+}
+
+void list_free(struct list *list, void (*free_function)(void*))
+{
+    while(!list_is_empty(list))
+        free_function(list_pop_front(list));
+
+    free(list);
 }

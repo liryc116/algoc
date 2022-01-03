@@ -1,14 +1,13 @@
 #include "int_matrix.h"
+#include <stdlib.h>
+#include <err.h>
 
-struct matrix* matrix_new_int(size_t width, size_t height)
+struct int_matrix* int_matrix_new(size_t width, size_t height)
 {
-    if(data_size==0)
-        return NULL;
-
-    struct matrix *matrix = malloc(struct matrix);
+    struct int_matrix *matrix = malloc(sizeof(struct int_matrix));
 
     if(matrix==NULL)
-        errx(1, "matrix_new: Not enough memory");
+        errx(1, "int_matrix_new: Not enough memory");
 
     matrix->width = width;
     matrix->height = height;
@@ -16,12 +15,12 @@ struct matrix* matrix_new_int(size_t width, size_t height)
     matrix->data = calloc(width*height, sizeof(int));
 
     if(matrix->data==NULL)
-        errx(1, "matrix_new: Not enough memory");
+        errx(1, "int_matrix_new: Not enough memory");
 
     return matrix;
 }
 
-long matrix_col_sum(struct matrix *m, size_t n)
+long int_matrix_col_sum(struct int_matrix *m, size_t n)
 {
     if(n>=m->width)
         return 0;
@@ -32,7 +31,7 @@ long matrix_col_sum(struct matrix *m, size_t n)
     return res;
 }
 
-long matrix_row_sum(struct matrix *m, size_t n)
+long int_matrix_row_sum(struct int_matrix *m, size_t n)
 {
     if(n>=m->height)
         return 0;
@@ -43,17 +42,18 @@ long matrix_row_sum(struct matrix *m, size_t n)
     return res;
 }
 
-void matrix_scalar_mult(struct matrix *m, int scalar)
+void int_matrix_scalar_mult(struct int_matrix *m, int scalar)
 {
-    for(size_t i = 0; i<m->width*m->height; m->data[i]=m->data[i]*scalar, i++);
+    for(size_t i = 0; i<m->width*m->height; m->data[i]*=scalar, i++);
 }
 
-struct matrix* matrix_mult(struct matrix *m1, struct matrix *m2)
+struct int_matrix* int_matrix_mult
+                        (struct int_matrix *m1, struct int_matrix *m2)
 {
     if(m1->width!=m2->height)
         return NULL;
 
-    struct matrix *res = matrix_new_int(m2->width, m1->height);
+    struct int_matrix *res = int_matrix_new(m2->width, m1->height);
 
     for(size_t i = 0; i<m1->height; i++)
     {
@@ -68,12 +68,12 @@ struct matrix* matrix_mult(struct matrix *m1, struct matrix *m2)
     return res;
 }
 
-struct matrix* matrix_sum(struct matrix *m1, struct matrix *m2)
+struct int_matrix* int_matrix_sum(struct int_matrix *m1, struct int_matrix *m2)
 {
     if(m1->width!=m2->width || m1->height!=m2->height)
         return NULL;
 
-    struct matrix *res = matrix_new_int(m1->width, m1->height);
+    struct int_matrix *res = int_matrix_new(m1->width, m1->height);
 
     for(size_t i = 0; i<m1->height; i++)
     {

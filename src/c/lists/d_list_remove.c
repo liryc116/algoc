@@ -1,4 +1,5 @@
 #include "d_list_remove.h"
+#include <stdlib.h>
 
 void* d_list_pop_front(struct d_list *l)
 {

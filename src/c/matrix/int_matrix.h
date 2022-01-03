@@ -1,37 +1,47 @@
 #ifndef INT_MATRIX_H
 #define INT_MATRIX_H
 
-#include "matrix.h"
+#include <stddef.h>
+
+struct int_matrix
+{
+    size_t data_size;
+    size_t width;
+    size_t height;
+    int *data;
+};
 
 /**
 ** Create a matrix of int
 */
-struct matrix* matrix_new_int(size_t width, size_t height);
+struct int_matrix* int_matrix_new(size_t width, size_t height);
 
 /**
 ** Sum the value of the n-th column
 */
-long matrix_col_sum(struct matrix *m, size_t n);
+long int_matrix_col_sum(struct int_matrix *m, size_t n);
 
 /**
 ** Sum the value of the n-th row
 */
-long matrix_row_sum(struct matrix *m, size_t n);
+long int_matrix_row_sum(struct int_matrix *m, size_t n);
 
 /**
 ** Multiply the matrix by scalar
 */
-void matrix_scalar_mult(struct matrix *m, int scalar);
+void int_matrix_scalar_mult(struct int_matrix *m, int scalar);
 
 /**
 ** Return a matrix of m1*m2 (in that order)
 ** Return NULL if m1->width != m2->height
 */
-struct matrix* matrix_mult(struct matrix *m1, struct matrix *m2);
+struct int_matrix* int_matrix_mult
+                    (struct int_matrix *m1, struct int_matrix *m2);
 
 /**
 ** Return a matrix of m1+m2
 */
-struct matrix* matrix_sum(struct matrix *m1, struct matrix *m2);
+struct int_matrix* int_matrix_sum
+                        (struct int_matrix *m1, struct int_matrix *m2);
 
 #endif /* ! INT_MATRIX_H */

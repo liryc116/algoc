@@ -4,13 +4,13 @@
 struct queue
 {
     struct queue_elm *newest;
-}
+};
 
 struct queue_elm
 {
     void *data;
     struct queue_elm *next;
-}
+};
 
 // Initialize (and allocate) the queue structure.
 struct queue* queue_init(void);

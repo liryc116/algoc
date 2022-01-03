@@ -10,6 +10,8 @@ struct vector
     void **data;
 };
 
+#include "vector_manipulation.h"
+
 // Create a new vector.
 // The initial capacity is 1.
 // The initial size is 0.

@@ -1,5 +1,7 @@
 #include "vector.h"
+#include <stdlib.h>
 #include <err.h>
+#include <string.h>
 
 struct vector *vector_new()
 {
@@ -11,7 +13,6 @@ struct vector *vector_new()
         errx(1, "Not enough memory!");
 
     vect->capacity = 1;
-	vect->size = 0;
     return vect;
 }
 
@@ -25,7 +26,7 @@ void vector_free(struct vector *v, void(*free_function)(void*))
 
 void double_capacity(struct vector *v)
 {
-    v->data=reallocarray(v->data, v->capacity * 2, sizeof(void*));
+    v->data=realloc(v->data, v->capacity * 2 * sizeof(void*));
 	if (v->data == NULL)
         errx(1, "Not enough memory!");
     v->capacity *= 2;

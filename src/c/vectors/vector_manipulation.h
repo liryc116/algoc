@@ -7,9 +7,10 @@
 // Append x at the end of a vector.
 // According to the size of the vector,
 // May multiply its capacity by two.
-void vector_push(struct vector *v, int x);
+void vector_push(struct vector *v, void *x);
 
 // Remove and return the last element of a vector.
+// Return NULL if vector is empty
 void* vector_pop(struct vector *v);
 
 // Get the value at the i index.
