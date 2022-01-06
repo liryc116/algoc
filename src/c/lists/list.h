@@ -24,21 +24,22 @@ size_t list_len(struct list *list);
 // Insert 'elm' in front of the list, that is just after the sentinel.
 // Note that 'elm' is already an existing element.
 // You just have to insert it.
-void list_push_front(struct list *list, void *data);
+void list_push_front(struct list *list, void *data, size_t elm_size);
 
 // Extract the first element (not the sentinel) of the list.
 // This operation removes the element from the list and returns it
 // (the caller is responsible for freeing it).
 // If the list is empty, the function returns NULL.
-void* list_pop_front(struct list *list);
+void *list_pop_front(struct list *list);
 
 // Search for the first element that contains 'value' and return it
 // (without removing it from the list).
 // The function returns NULL if the value is not in the list.
-struct list *list_find(struct list *list, void *value);
+struct list *list_find(struct list *list, void *value,
+        int (*is_equal)(void *, void *));
 
 // Insert 'elm' in the list at the i index.
-void list_insert_at(struct list *list, size_t i, void *data);
+void list_insert_at(struct list *list, void *data, size_t elm_size, size_t i);
 
 // Reverse the elements of the list (except for the sentinel).
 void list_rev(struct list *list);

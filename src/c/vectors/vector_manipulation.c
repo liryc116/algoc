@@ -54,7 +54,6 @@ void* vector_remove(struct vector *v, size_t i)
 		void *x = v->data[i];
         for(size_t n = i+1; n<v->size; n++)
             v->data[n-1] = v->data[n];
-        v->data[v->size] = NULL;
 		v->size -= 1;
 		return x;
 	}

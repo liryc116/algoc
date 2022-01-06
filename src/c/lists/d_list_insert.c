@@ -1,8 +1,9 @@
 #include "d_list_insert.h"
 #include <stdlib.h>
+#include <string.h>
 #include <err.h>
 
-void d_list_push_front(struct d_list *l, void *data)
+void d_list_push_front(struct d_list *l, void *data, size_t elm_size)
 {
     struct list_elm *new = malloc(sizeof(struct list_elm));
 
@@ -11,7 +12,8 @@ void d_list_push_front(struct d_list *l, void *data)
 
     new->next = l->head;
     new->prev = NULL;
-    new->data = data;
+    new->data = malloc(elm_size);
+    memcpy(new->data, data, elm_size);
 
     l->len+=1;
     if(l->head!=NULL)
@@ -21,7 +23,7 @@ void d_list_push_front(struct d_list *l, void *data)
         l->tail = new;
 }
 
-void d_list_push_back(struct d_list *l, void *data)
+void d_list_push_back(struct d_list *l, void *data, size_t elm_size)
 {
     struct list_elm *new = malloc(sizeof(struct list_elm));
 
@@ -30,7 +32,8 @@ void d_list_push_back(struct d_list *l, void *data)
 
     new->next = NULL;
     new->prev = l->tail;
-    new->data = data;
+    new->data = malloc(elm_size);
+    memcpy(new->data, data, elm_size);
 
     l->len+=1;
     if(l->tail!=NULL)
@@ -40,10 +43,18 @@ void d_list_push_back(struct d_list *l, void *data)
         l->head = new;
 }
 
-void d_list_insert_at(struct d_list *l, void *data, size_t n)
+void d_list_insert_at(struct d_list *l, void *data, size_t elm_size, size_t n)
 {
-    if(n==l->len)
-        d_list_push_back(l, data);
+    if(l->len==n)
+    {
+        d_list_push_back(l, data, elm_size);
+        if(n==0)
+            l->head = l->tail;
+    }
+    else if(n==0)
+    {
+        d_list_push_front(l, data, elm_size);
+    }
     else if(n<l->len)
     {
         struct list_elm *new = malloc(sizeof(struct list_elm));
@@ -58,7 +69,13 @@ void d_list_insert_at(struct d_list *l, void *data, size_t n)
 
         new->next = elm;
         new->prev = elm->prev;
-        new->data = data;
+        new->data = malloc(elm_size);
+        memcpy(new->data, data, elm_size);
+
+        new->prev->next = new;
+        new->next->prev = new;
+
+        l->len++;
 
         if(n==0)
             l->head = new;

@@ -1,5 +1,6 @@
 #include "list.h"
 #include <stdlib.h>
+#include <string.h>
 
 struct list* list_new(void)
 {
@@ -10,7 +11,7 @@ struct list* list_new(void)
 
 int list_is_empty(struct list *list)
 {
-    return list->next==NULL;
+    return list==NULL || list->next==NULL;
 }
 
 size_t list_len(struct list *list)
@@ -22,15 +23,20 @@ size_t list_len(struct list *list)
     return i;
 }
 
-void list_push_front(struct list *list, void *data)
+void list_push_front(struct list *list, void *data, size_t elm_size)
 {
-    struct list *new = list_new();
-    new->data = data;
-    new->next=list->next;
-    list->next=new;
+    if(data != NULL)
+    {
+        struct list *new = list_new();
+        new->data = malloc(elm_size);
+        memcpy(new->data, data, elm_size);
+
+        new->next=list->next;
+        list->next=new;
+    }
 }
 
-void* list_pop_front(struct list *list)
+void *list_pop_front(struct list *list)
 {
     struct list *l = list->next;
     void *data = NULL;
@@ -43,15 +49,19 @@ void* list_pop_front(struct list *list)
     return data;
 }
 
-struct list* list_find(struct list *list, void *value)
+struct list* list_find(struct list *list, void *value,
+        int (*is_equal)(void *, void *))
 {
-    struct list *l = list;
-    for(; l!=NULL && l->data!=value; l=l->next);
+    for(struct list *l = list; l!=NULL; l=l->next)
+    {
+        if(l->data!=NULL && is_equal(l->data, value))
+            return l;
+    }
 
-    return l;
+    return NULL;
 }
 
-void list_insert_at(struct list *list, size_t i, void *data)
+void list_insert_at(struct list *list, void *data, size_t elm_size, size_t i)
 {
     struct list *l = list;
 
@@ -59,7 +69,7 @@ void list_insert_at(struct list *list, size_t i, void *data)
     struct list *elm = list_new();
     elm->data=data;
 
-    list_push_front(l, elm);
+    list_push_front(l, elm, elm_size);
 }
 
 void list_rev(struct list *list)
@@ -67,17 +77,18 @@ void list_rev(struct list *list)
     if(!list_is_empty(list))
     {
         struct list *l = list->next;
-        struct list *next = l->next;
+        struct list *prev = NULL;
+        struct list *next = NULL;
 
-        for(; next!=NULL; )
+        for(; l!=NULL; )
         {
-            struct list *prev = l;
+            next = l->next;
+            l->next = prev;
+            prev = l;
             l = next;
-            next = next->next;
-            l->next=prev;
         }
 
-        list->next=l;
+        list->next=prev;
     }
 }
 
@@ -99,5 +110,6 @@ void list_free(struct list *list, void (*free_function)(void*))
     while(!list_is_empty(list))
         free_function(list_pop_front(list));
 
+    free_function(list->data);
     free(list);
 }
