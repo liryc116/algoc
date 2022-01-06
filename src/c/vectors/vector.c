@@ -26,7 +26,7 @@ void vector_free(struct vector *v, void(*free_function)(void*))
 
 void double_capacity(struct vector *v)
 {
-    v->data=realloc(v->data, v->capacity * 2 * sizeof(v->data[0]));
+    v->data=realloc(v->data, v->capacity * 2 * sizeof(void *));
 	if (v->data == NULL)
         errx(1, "Not enough memory!");
     v->capacity *= 2;
