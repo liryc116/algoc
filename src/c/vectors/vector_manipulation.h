@@ -7,7 +7,7 @@
 // Append x at the end of a vector.
 // According to the size of the vector,
 // May multiply its capacity by two.
-void vector_push(struct vector *v, void *x);
+void vector_push(struct vector *v, void *x, size_t elm_size);
 
 // Remove and return the last element of a vector.
 // Return NULL if vector is empty
@@ -24,7 +24,7 @@ void* vector_get(struct vector *v, size_t i);
 // According to the size of the vector,
 // Mmay multiply its capacity by two.
 // If the i index is out of bound, do nothing.
-void vector_insert(struct vector *v, size_t i, void *x);
+void vector_insert(struct vector *v, void *x, size_t elm_size, size_t i);
 
 // Remove and return the i-index element of a vector.
 // - If the i index is not out of bound,

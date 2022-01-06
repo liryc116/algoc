@@ -55,50 +55,48 @@ Test (vector_free, free_02)
 Test(vector_push,push_01)
 {
 	struct vector *vect = vector_new();
-	int *value = malloc(sizeof(int));
-	vector_push(vect, value);
-    cr_assert(vect->data[0] == value);
+	int value = 42;
+	vector_push(vect, &value, sizeof(int));
+    cr_assert(*(int *)vect->data[0] == value);
 	vector_free(vect, &free);
 }
 
 Test(vector_push,push_02)
 {
 	struct vector *vect = vector_new();
-    int **l = calloc(4, sizeof(int*));
-	vector_push(vect,l[0]);
-	vector_push(vect,l[1]);
-	vector_push(vect,l[2]);
-	vector_push(vect,l[3]);
+    int l[4] = {42, 15, 2, 6};
+	vector_push(vect, &l[0], sizeof(int));
+	vector_push(vect, &l[1], sizeof(int));
+	vector_push(vect, &l[2], sizeof(int));
+	vector_push(vect, &l[3], sizeof(int));
 	cr_assert(vect->size == 4);
 	cr_assert(vect->capacity == 4);
 	vector_free(vect, &free);
-    free(l);
 }
 
 Test(vector_pop,pop_01)
 {
 	struct vector *vect = vector_new();
-    int **l = calloc(4, sizeof(int*));
-	vector_push(vect,l[0]);
-	vector_push(vect,l[1]);
-	vector_push(vect,l[2]);
-	vector_push(vect,l[3]);
+    int l[4] = {42, 15, 2, 6};
+	vector_push(vect, &l[0], sizeof(int));
+	vector_push(vect, &l[1], sizeof(int));
+	vector_push(vect, &l[2], sizeof(int));
+	vector_push(vect, &l[3], sizeof(int));
 	int *res = vector_pop(vect);
-	cr_assert(res == l[3]);
+	cr_assert(*(int *)res == l[3]);
 	vector_free(vect, &free);
     free(res);
-    free(l);
 }
 
 Test(vector_pop,pop_02)
 {
 	struct vector *tmp = vector_new();
-    int *x = malloc(sizeof(int));
-	vector_push(tmp,x);
+    int x = 3;
+	vector_push(tmp, &x, sizeof(int));
 	int *res = vector_pop(tmp);
-	cr_assert(res == x);
+	cr_assert(*(int *)res == x);
 	vector_free(tmp, &free);
-    free(x);
+    free(res);
 }
 
 Test(vector_pop,pop_03)
@@ -112,119 +110,119 @@ Test(vector_pop,pop_03)
 Test(vector_get,get_01)
 {
 	struct vector *vect = vector_new();
-    int **l = calloc(4, sizeof(int*));
-	vector_push(vect,l[0]);
-	vector_push(vect,l[1]);
-	vector_push(vect,l[2]);
+    int l[4] = {42, 15, 2, 6};
+	vector_push(vect, &l[0], sizeof(int));
+	vector_push(vect, &l[1], sizeof(int));
+	vector_push(vect, &l[2], sizeof(int));
+	vector_push(vect, &l[3], sizeof(int));
 	int *res = vector_get(vect,1);
-	cr_assert(res == l[1]);
+	cr_assert(*(int *)res == l[1]);
 	res = vector_get(vect, 3);
-	cr_assert(res == l[3]);
+	cr_assert(*(int *)res == l[3]);
 	vector_free(vect, &free);
-    free(res);
-    free(l);
 }
 
 Test(vector_get,get_02)
 {
-	struct vector *tmp = vector_new();
-	int *res = vector_get(tmp,1);
+	struct vector *vect = vector_new();
+	int *res = vector_get(vect,1);
 	cr_assert(res == NULL);
-	vector_free(tmp, &free);
+	vector_free(vect, &free);
 }
 
 Test(vector_insert,insert_01)
 {
-	struct vector *tmp = vector_new();
-    int *x = malloc(sizeof(int));
-	vector_insert(tmp, 0, x);
-	cr_assert(tmp->data[0] == x);
-	cr_assert(tmp->capacity == 1);
-	cr_assert(tmp->size == 1);
-	vector_free(tmp, &free);
+	struct vector *vect = vector_new();
+    int x = 42;
+	vector_insert(vect, &x, sizeof(int), 0);
+	cr_assert(*(int *)vect->data[0] == x);
+	cr_assert(vect->capacity == 1);
+	cr_assert(vect->size == 1);
+	vector_free(vect, &free);
 }
 
 Test(vector_insert,insert_02)
 {
-	struct vector *tmp = vector_new();
-    int **l = calloc(4, sizeof(int*));
-	vector_insert(tmp, 0, l[0]);
-	cr_assert(tmp->data[0] == l[0]);
-	vector_insert(tmp, 0, l[1]);
-	cr_assert(tmp->data[0] == l[1]);
-	vector_insert(tmp, 0, l[2]);
-	cr_assert(tmp->data[0] == l[2]);
-	vector_insert(tmp, 0, l[3]);
-	cr_assert(tmp->data[0] == l[3]);
-	cr_assert(tmp->data[3] == l[0]);
-	cr_assert(tmp->capacity == 4);
-	cr_assert(tmp->size == 4);
-	vector_free(tmp, &free);
-    free(l);
+	struct vector *vect = vector_new();
+    int l[4] = {42, 15, 2, 6};
+	vector_insert(vect, &l[0], sizeof(int), 0);
+	cr_assert(*(int *)vect->data[0] == l[0]);
+	vector_insert(vect, &l[1], sizeof(int), 0);
+	cr_assert(*(int *)vect->data[0] == l[1]);
+	vector_insert(vect, &l[2], sizeof(int), 0);
+	cr_assert(*(int *)vect->data[0] == l[2]);
+	vector_insert(vect, &l[3], sizeof(int), 0);
+	cr_assert(*(int *)vect->data[0] == l[3]);
+	cr_assert(*(int *)vect->data[3] == l[0]);
+	cr_assert(vect->capacity == 4);
+	cr_assert(vect->size == 4);
+	vector_free(vect, &free);
 }
 
 Test(vector_insert,insert_03)
 {
-	struct vector *tmp = vector_new();
-    int **l = calloc(4, sizeof(int*));
-	vector_insert(tmp, 0, l[0]);
-	vector_insert(tmp, 0, l[1]);
-	vector_insert(tmp, 0, l[2]);
-	vector_insert(tmp, 2, l[3]);
-	cr_assert(tmp->data[2] == l[3] );
-	vector_insert(tmp, 2, l[2]);
-	cr_assert(tmp->data[2] == l[2]);
-	vector_free(tmp, &free);
-    free(l);
+	struct vector *vect = vector_new();
+    int l[4] = {42, 15, 2, 6};
+	vector_insert(vect, &l[0], sizeof(int), 0);
+	vector_insert(vect, &l[1], sizeof(int), 0);
+	vector_insert(vect, &l[2], sizeof(int), 0);
+	vector_insert(vect, &l[3], sizeof(int), 2);
+	cr_assert(*(int *)vect->data[2] == l[3]);
+	vector_insert(vect, &l[2], sizeof(int), 2);
+	cr_assert(*(int *)vect->data[2] == l[2]);
+	vector_free(vect, &free);
 }
 
 Test(vector_remove,remove_01)
 {
-	struct vector *tmp = vector_new();
-    int **l = calloc(4, sizeof(int*));
-	vector_push(tmp, l[0]);
-	vector_push(tmp, l[1]);
-	vector_push(tmp, l[2]);
-	vector_push(tmp, l[3]);
+	struct vector *vect = vector_new();
+    int l[4] = {42, 15, 2, 6};
+	vector_push(vect, &l[0], sizeof(int));
+	vector_push(vect, &l[1], sizeof(int));
+	vector_push(vect, &l[2], sizeof(int));
+	vector_push(vect, &l[3], sizeof(int));
 
-	int *res = vector_remove(tmp,1);
-	cr_assert(res == l[1]);
-	res = vector_remove(tmp,2);
-	cr_assert(res == l[3]);
-	vector_free(tmp, &free);
-    free(l);
+	int *res = vector_remove(vect, 1);
+	cr_assert(*res == l[1]);
+    free(res);
+	res = vector_remove(vect, 2);
+	cr_assert(*res == l[3]);
+	vector_free(vect, &free);
+    free(res);
 }
 
 Test(vector_remove,remove_02)
 {
-	struct vector *tmp = vector_new();
-    int **l = calloc(4, sizeof(int*));
-	vector_push(tmp, l[0]);
-	vector_push(tmp, l[1]);
-	vector_push(tmp, l[2]);
-	vector_push(tmp, l[3]);
-	int *res = vector_remove(tmp,3);
-	res = vector_remove(tmp,2);
-	res = vector_remove(tmp,1);
-	cr_assert(res == l[1]);
-	cr_assert(tmp->size == 1);
-	cr_assert(tmp->capacity == 4);
-	res = vector_remove(tmp,0);
-	vector_free(tmp, &free);
-    free(l);
+	struct vector *vect = vector_new();
+    int l[4] = {42, 15, 2, 6};
+	vector_push(vect, &l[0], sizeof(int));
+	vector_push(vect, &l[1], sizeof(int));
+	vector_push(vect, &l[2], sizeof(int));
+	vector_push(vect, &l[3], sizeof(int));
+	int *res = vector_remove(vect,3);
+    free(res);
+	res = vector_remove(vect, 2);
+    free(res);
+	res = vector_remove(vect, 1);
+	cr_assert(*res == l[1]);
+    free(res);
+	cr_assert(vect->size == 1);
+	cr_assert(vect->capacity == 4);
+	res = vector_remove(vect,0);
+	vector_free(vect, &free);
+    free(res);
 }
 
 
 Test(vector_remove,remove_03)
 {
-	struct vector *tmp = vector_new();
-    int **l = calloc(4, sizeof(int*));
-	vector_push(tmp, l[0]);
-	vector_push(tmp, l[1]);
-	vector_push(tmp, l[2]);
-	vector_push(tmp, l[3]);
-	int *res = vector_remove(tmp,10);
+	struct vector *vect = vector_new();
+    int l[4] = {42, 15, 2, 6};
+	vector_push(vect, &l[0], sizeof(int));
+	vector_push(vect, &l[1], sizeof(int));
+	vector_push(vect, &l[2], sizeof(int));
+	vector_push(vect, &l[3], sizeof(int));
+	int *res = vector_remove(vect, 10);
 	cr_assert(res == NULL);
-	vector_free(tmp, &free);
-    free(l);
+	vector_free(vect, &free);
 }

@@ -1,12 +1,14 @@
 #include "vector_manipulation.h"
 #include "vector.h"
 #include <stdlib.h>
+#include <string.h>
 
-void vector_push(struct vector *v, void *x)
+void vector_push(struct vector *v, void *x, size_t elm_size)
 {
     if (v->capacity == v->size)
         double_capacity(v);
-    v->data[v->size] = x;
+    v->data[v->size] = malloc(elm_size);
+    memcpy(v->data[v->size], x, elm_size);
     v->size+=1;
 }
 
@@ -32,7 +34,7 @@ void* vector_get(struct vector *v, size_t i)
     return NULL;
 }
 
-void vector_insert(struct vector *v, size_t i, void *x)
+void vector_insert(struct vector *v, void *x, size_t elm_size, size_t i)
 {
     if (i<=v->size)
     {
@@ -42,7 +44,8 @@ void vector_insert(struct vector *v, size_t i, void *x)
         for(size_t n = v->size; n>=i && n!=0; n--)
             v->data[n] = v->data[n-1];
 
-        v->data[i] = x;
+        v->data[i] = malloc(elm_size);
+        memcpy(v->data[i], x, elm_size);
         v->size+=1;
     }
 }
