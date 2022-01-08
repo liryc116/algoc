@@ -11,9 +11,7 @@ struct matrix
     void **data;
 };
 
-#include "matrix_manipulation.h"
-
-struct matrix* matrix_new(size_t width, size_t height);
+struct matrix* matrix_new(size_t height, size_t width);
 
 // Add n rows at the bottom of the matrix
 void matrix_add_rows(struct matrix *matrix, size_t n);
@@ -22,5 +20,7 @@ void matrix_add_rows(struct matrix *matrix, size_t n);
 void matrix_add_cols(struct matrix *matrix, size_t n);
 
 void matrix_free(struct matrix *matrix, void (*free_function)(void*));
+
+#include "matrix_manipulation.h"
 
 #endif /* ! MATRIX_H */

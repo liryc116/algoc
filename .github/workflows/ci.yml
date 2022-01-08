@@ -1,0 +1,28 @@
+name: Build and Test
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install Criterion
+      run: |
+        wget https://github.com/Snaipe/Criterion/releases/download/v2.3.3/criterion-v2.3.3-linux-x86_64.tar.bz2
+        tar -xvf criterion-v2.3.3-linux-x86_64.tar.bz2
+        sudo cp -r criterion-v2.3.3/* /usr
+
+    - name: clang-format C-Check
+      run: make format-check-c
+
+    - name: Build (gcc)
+      run: |
+        make clean
+        #make ASAN=1 DEBUG=1 -j
+
+    - name: Run Tests
+      run: make run-test
