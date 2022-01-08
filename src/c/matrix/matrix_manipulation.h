@@ -10,7 +10,8 @@
 */
 void* matrix_get(struct matrix *matrix, size_t i, size_t j);
 
-void matrix_put(struct matrix *matrix, size_t i, size_t j, void* data);
+void matrix_put(struct matrix *matrix, size_t i, size_t j,
+                                                void* data, size_t elm_size);
 
 void matrix_transpose(struct matrix *matrix);
 

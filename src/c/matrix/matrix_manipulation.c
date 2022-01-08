@@ -3,6 +3,7 @@
 #include <err.h>
 #include <stdlib.h>
 #include <stddef.h>
+#include <string.h>
 
 void* matrix_get(struct matrix *matrix, size_t i, size_t j)
 {
@@ -11,23 +12,32 @@ void* matrix_get(struct matrix *matrix, size_t i, size_t j)
     return matrix->data[matrix->width*i+j];
 }
 
-void matrix_put(struct matrix *matrix, size_t i, size_t j, void* data)
+void matrix_put(struct matrix *matrix, size_t i, size_t j,
+                                    void* data, size_t elm_size)
 {
     if(i<matrix->height && j<matrix->width)
-        matrix->data[matrix->width*i+j] = data;
+    {
+        matrix->data[matrix->width*i+j] = malloc(elm_size);
+        memcpy(matrix->data[matrix->width*i+j], data, elm_size);
+    }
 }
 
 void matrix_transpose(struct matrix *matrix)
 {
-    void **tp_data = malloc(matrix->width*matrix->height*matrix->data_size);
+    void **tp_data = calloc(matrix->width*matrix->height, matrix->data_size);
 
     if(tp_data == NULL)
         errx(1, "Not enough memory");
 
     for(size_t i = 0; i<matrix->width; i++)
     {
-        for(size_t k = 0; k<matrix->height; k++)
-            tp_data[matrix->width*i+k]=matrix->data[matrix->width*k+i];
+        for(size_t j = 0; j<matrix->height; j++)
+        {
+            tp_data[matrix->height*i+j] = matrix->data[matrix->width*j+i];
+            //if(matrix->data[matrix->width*j+i]!=NULL)
+              //  memcpy(tp_data[matrix->height*i+j],
+                //        matrix->data[matrix->width*j+i], matrix->data_size);
+        }
     }
 
     size_t tmp = matrix->width;
