@@ -1,6 +1,8 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
+#include <stddef.h>
+
 struct queue
 {
     struct queue_elm *newest;
@@ -20,7 +22,7 @@ struct queue* queue_init(void);
 int queue_is_empty(struct queue *queue);
 
 // Puts data at the end of the queue
-void queue_push(struct queue *queue, void* data);
+void queue_push(struct queue *queue, void* data, size_t data_size);
 
 // Removes the element at the beginning of the queue
 // Return the data of the element

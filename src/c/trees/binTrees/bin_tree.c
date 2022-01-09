@@ -71,7 +71,7 @@ void bin_tree_breadth(struct bin_tree *tree)
 {
     struct queue *q = queue_init();
     if(tree!=NULL)
-        queue_push(q, tree);
+        queue_push(q, tree, sizeof(void *));
 
     while(!queue_is_empty(q))
     {
@@ -80,9 +80,9 @@ void bin_tree_breadth(struct bin_tree *tree)
         // Treatment on t
 
         if(t->left!=NULL)
-            queue_push(q, t->left);
+            queue_push(q, t->left, sizeof(void *));
         if(t->right!=NULL)
-            queue_push(q, t->right);
+            queue_push(q, t->right, sizeof(void *));
     }
 
     queue_free(q, &free);
