@@ -24,7 +24,13 @@ int queue_is_empty(struct queue *queue)
 void queue_push(struct queue *queue, void* data, size_t data_size)
 {
     struct queue_elm *elm = malloc(sizeof(struct queue_elm));
+    if(elm==NULL)
+        errx(1, "Not enough memory");
+
     elm->data = malloc(data_size);
+    if(elm->data==NULL)
+        errx(1, "Not enough memory");
+
     memcpy(elm->data, data, data_size);
 
     if(queue->newest == NULL)
