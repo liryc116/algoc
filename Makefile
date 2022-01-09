@@ -14,12 +14,12 @@ BUILD := build
 TARGET := c-test
 
 
-C_FILES := $(shell find src/c/ tests/c -type f -name "*.c")
+C_FILES := $(shell find src/ tests/ -type f -name "*.c")
 O_FILES := $(C_FILES:%.c=$(BUILD)/%.o)
 D_FILES := $(O_FILES:%.o=%.d)
 
 
-SRCDIRS := $(shell find src/c tests/c -type d)
+SRCDIRS := $(shell find src/ tests/ -type d)
 $(shell mkdir -p $(SRCDIRS:%=$(BUILD)/%))
 
 all: $(TARGET)
