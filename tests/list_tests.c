@@ -1,4 +1,4 @@
-#include "../../src/c/lists/list.h"
+#include "../src/lists/list.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <criterion/criterion.h>

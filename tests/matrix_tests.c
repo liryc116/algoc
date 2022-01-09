@@ -1,4 +1,4 @@
-#include "../../src/c/matrix/matrix.h"
+#include "../src/matrix/matrix.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <criterion/criterion.h>

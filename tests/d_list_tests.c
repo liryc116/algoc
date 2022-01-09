@@ -1,4 +1,4 @@
-#include "../../src/c/lists/double_list.h"
+#include "../src/lists/double_list.h"
 #include <criterion/criterion.h>
 #include <stdlib.h>
 

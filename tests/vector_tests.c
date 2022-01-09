@@ -1,4 +1,4 @@
-#include "../../src/c/vectors/vector.h"
+#include "../src/vectors/vector.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <criterion/criterion.h>

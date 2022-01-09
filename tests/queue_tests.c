@@ -1,4 +1,4 @@
-#include "../../src/c/queues/queue.h"
+#include "../src/queues/queue.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <criterion/criterion.h>
