@@ -1,4 +1,4 @@
-# algoccs
+# algoc
 Some Algorithmic data structures and their associated functions
 
 Such as:
