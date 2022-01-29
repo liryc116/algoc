@@ -12,6 +12,9 @@ struct bst_tree* bst_new(int data)
 
 void bst_insert(struct bst_tree *t, int data)
 {
+    if(t==NULL)
+        return;
+
     if(data<=t->key)
     {
         if(t->left==NULL)
@@ -33,7 +36,7 @@ struct bst_tree* bst_rem_max(struct bst_tree *t, int *max)
 {
     if(t->right!=NULL)
     {
-        t = t->right;
+        t->right = bst_rem_max(t->right, max);
         return t;
     }
     else
@@ -51,11 +54,11 @@ struct bst_tree* bst_rem(struct bst_tree *t)
     {
         if(t->left!=NULL)
         {
-            int *max = 0;
+            int max;
 
-            bst_rem_max(t->left,max);
+            t->left = bst_rem_max(t->left, &max);
 
-            t->key = *max;
+            t->key = max;
             return t;
         }
         else
@@ -73,15 +76,15 @@ struct bst_tree* bst_rem(struct bst_tree *t)
     }
 }
 
-int bst_remove(struct bst_tree *t, int data)
+struct bst_tree *bst_remove(struct bst_tree *t, int data)
 {
     if(t==NULL)
-        return 0;
+        return NULL;
 
     if(t->key==data)
     {
         t = bst_rem(t);
-        return 1;
+        return t;
     }
     else
     {
@@ -90,6 +93,18 @@ int bst_remove(struct bst_tree *t, int data)
         else
             return bst_remove(t->left, data);
     }
+}
+
+struct bst_tree *bst_find(struct bst_tree *t, int data)
+{
+    if(t==NULL)
+        return NULL;
+    else if(t->key==data)
+        return t;
+    else if(t->key<data)
+        return bst_find(t->right, data);
+    else
+        return bst_find(t->left, data);
 }
 
 void bst_free(struct bst_tree *t)
