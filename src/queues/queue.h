@@ -28,6 +28,9 @@ void queue_push(struct queue *queue, void* data, size_t data_size);
 // Return the data of the element
 void* queue_pop(struct queue *queue);
 
+// Return a ptr to the oldest element of the list
+void *queue_peek(struct queue *queue);
+
 // Free the queue and all its data (using the passed in function).
 void queue_free(struct queue *queue, void (*free_function)(void*));
 

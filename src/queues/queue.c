@@ -41,8 +41,7 @@ void queue_push(struct queue *queue, void* data, size_t data_size)
     else
     {
         elm->next = queue->newest->next;
-        if(queue->newest == queue->newest->next)
-            queue->newest->next = elm;
+        queue->newest->next = elm;
         queue->newest = elm;
     }
 }
@@ -62,6 +61,13 @@ void* queue_pop(struct queue *queue)
 
     free(oldest);
     return data;
+}
+
+void *queue_peek(struct queue *queue)
+{
+    if(queue_is_empty(queue))
+        return NULL;
+    return queue->newest->data;
 }
 
 void queue_free(struct queue *queue, void (*free_function)(void*))
