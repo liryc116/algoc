@@ -41,7 +41,8 @@ void queue_push(struct queue *queue, void* data, size_t data_size)
     else
     {
         elm->next = queue->newest->next;
-        queue->newest->next = elm;
+        if(queue->newest == queue->newest->next)
+            queue->newest->next = elm;
         queue->newest = elm;
     }
 }

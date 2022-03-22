@@ -108,6 +108,12 @@ Test(queue_pop, pop_2)
     cr_assert(*ptr == x);
     cr_assert(!queue_is_empty(q));
 
+    free(ptr);
+    ptr = queue_pop(q);
+
+    cr_assert(*ptr == y);
+    cr_assert(queue_is_empty(q));
+
     queue_free(q, &free);
     free(ptr);
 }
