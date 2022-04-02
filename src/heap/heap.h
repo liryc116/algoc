@@ -17,7 +17,7 @@ struct heap *heap_new(int (*cmp_fun)(void *, void *));
 
 void heap_free(struct heap *h, void (*free_function)(void*));
 
-void heap_insert(struct heap *h, void *data);
+void heap_insert(struct heap *h, void *data, size_t data_size);
 
 void *heap_peek(struct heap *h);
 

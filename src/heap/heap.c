@@ -3,6 +3,7 @@
 #include "../utils/xmalloc.h"
 
 #include <stdlib.h>
+#include <string.h>
 
 struct heap *heap_new(int (*cmp_fun)(void *, void *))
 {
@@ -65,12 +66,13 @@ static void sift_down(struct heap *h, size_t n)
     }
 }
 
-void heap_insert(struct heap *h, void *data)
+void heap_insert(struct heap *h, void *data, size_t data_size)
 {
     if(h->size==h->capacity)
         heap_double_capacity(h);
 
-    h->data[h->size] = data;
+    h->data[h->size] = xmalloc(data_size);
+    memcpy(h->data[h->size], data, data_size);
     sift_up(h, h->size);
 
     h->size += 1;
