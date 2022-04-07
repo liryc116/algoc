@@ -1,7 +1,7 @@
 CC := gcc
 LD := gcc
 
-CFLAGS := -Wall -Wextra -Werror -g
+CFLAGS := -Wall -Wextra -Werror -g -pedantic
 LDFLAGS :=
 CPPFLAGS := -MMD
 LDLIBS := -lcriterion

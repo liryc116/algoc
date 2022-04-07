@@ -108,6 +108,36 @@ Test(queue_pop, pop_2)
     cr_assert(*ptr == x);
     cr_assert(!queue_is_empty(q));
 
+    free(ptr);
+    ptr = queue_pop(q);
+
+    cr_assert(*ptr == y);
+    cr_assert(queue_is_empty(q));
+
     queue_free(q, &free);
     free(ptr);
+}
+
+Test(queue_pop, pop_3)
+{
+    struct queue *q = queue_init();
+
+    int v[5] = {42, 5, 7, 9, 3};
+    for(size_t i = 0; i<5; i++)
+        queue_push(q, &v[i], sizeof(int));
+
+    int *ptr;
+
+    cr_assert(!queue_is_empty(q));
+
+    for(size_t i = 0; i<5; i++)
+    {
+        ptr = queue_pop(q);
+        cr_assert(*ptr == v[i]);
+        free(ptr);
+    }
+
+    cr_assert(queue_is_empty(q));
+
+    queue_free(q, &free);
 }
