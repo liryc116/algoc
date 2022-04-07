@@ -87,6 +87,29 @@ static void split(struct btree *t, size_t i)
     insert_key(t, x, i);
     insert_child(t, R, i+1);
 }
+static int __insert(struct btree *t, void *key)
+{
+    size_t i = bin_search(t->cmp_fun, t->keys, t->nbkeys, key);
+    if(i<t->nbkeys && t->cmp_fun(key, t->keys[i])==0)
+        return 0;
+    else if(t->nbchildren==0)
+    {
+        insert_key(t, key, i);
+        return 0;
+    }
+    else
+    {
+        if(t->children[i]->nbkeys == 2*t->degree -1)
+        {
+            if(t->cmp_fun((t->children[i])->keys[t->degree-1], key)==0)
+                return 0;
+            split(t, i);
+            if(t->cmp_fun(key, t->children[i])>0)
+                i+=1;
+        }
+        return __insert(t->children[i], key);
+    }
+}
 
 void btree_insert_key(struct btree **tree, void *key, size_t data_size)
 {
@@ -98,21 +121,19 @@ void btree_insert_key(struct btree **tree, void *key, size_t data_size)
         if(t->nbkeys == 2*t->degree - 1)
         {
             struct btree *tmp = btree_new(t->degree, t->cmp_fun);
+            insert_child(tmp, t, 0);
 
-            tmp->nbkeys = 1;
-            t->keys = xcalloc(1, sizeof(void *));
-            t->keys[0] = xmalloc(data_size);
-            memcpy(t->keys[0], key, data_size);
-
-            split();
+            t = tmp;
+            split(t, 0);
         }
-        __insert();
+
+        void *key_cp = xmalloc(data_size);
+        memcpy(key_cp, key, data_size);
+        int n_err = __insert(t, key_cp);
+
+        if(!n_err)
+            free(key_cp);
     }
-}
-
-void btree_insert_children(struct btree *t, struct btree *child)
-{
-
 }
 
 void btree_free(struct btree *t, void(*free_fun)(void *))
