@@ -1,5 +1,6 @@
 # algoccs
 Some Algorithmic data structures and their associated functions
+Also a few utils
 
 Such as:
 	- Linked Lists
