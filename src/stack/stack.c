@@ -1,9 +1,9 @@
 #include "stack.h"
 
-#include "../utils/xmalloc.h"
-
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
+
+#include "../utils/xmalloc.h"
 
 struct stack *stack_new()
 {
@@ -29,14 +29,14 @@ void stack_push(struct stack *stack, void *data, size_t data_size)
 
 void *stack_top(struct stack *stack)
 {
-    if(stack->next == NULL)
+    if (stack->next == NULL)
         return NULL;
     return stack->next->value;
 }
 
 void *stack_pop(struct stack *stack)
 {
-    if(stack_is_empty(stack))
+    if (stack_is_empty(stack))
         return NULL;
 
     struct stack *tmp = stack->next;
@@ -48,9 +48,9 @@ void *stack_pop(struct stack *stack)
     return data;
 }
 
-void stack_free(struct stack *stack, void(*free_function)(void *))
+void stack_free(struct stack *stack, void (*free_function)(void *))
 {
-    while(!stack_is_empty(stack))
+    while (!stack_is_empty(stack))
         free_function(stack_pop(stack));
 
     free(stack);

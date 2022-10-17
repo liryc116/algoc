@@ -1,27 +1,29 @@
 #include "htab_manipulation.h"
-#include "htab.h"
+
 #include <stdint.h>
 #include <string.h>
+
+#include "htab.h"
 
 // Return the hash value of the 'key' string.
 // Use the Jenkins's one_at_a_time hash.
 static uint32_t hash(char *key)
 {
-	size_t i = 0;
-	uint32_t hkey = 0;
+    size_t i = 0;
+    uint32_t hkey = 0;
 
-	while (key[i++]!='\0')
-	{
-		hkey += key[i];
-		hkey += hkey << 10;
-		hkey ^= hkey >> 6;
-	}
+    while (key[i++] != '\0')
+    {
+        hkey += key[i];
+        hkey += hkey << 10;
+        hkey ^= hkey >> 6;
+    }
 
-	hkey += hkey << 3;
-	hkey ^= hkey >> 11;
-	hkey += hkey << 15;
+    hkey += hkey << 3;
+    hkey ^= hkey >> 11;
+    hkey += hkey << 15;
 
-	return hkey;
+    return hkey;
 }
 
 static void htab_double_capacity(struct htab *ht)
@@ -30,13 +32,13 @@ static void htab_double_capacity(struct htab *ht)
     ht->capacity *= 2;
     ht->data = reallocarray(ht->data, ht->capacity, sizeof(struct htab));
 
-    for(size_t i = 0; i<old_cap; i++)
+    for (size_t i = 0; i < old_cap; i++)
     {
         struct pair *p = &ht->data[i];
-        while(p->next!=NULL)
+        while (p->next != NULL)
         {
-            size_t new_index = p->hkey%ht->capacity;
-            if(p->hkey%old_cap != new_index)
+            size_t new_index = p->hkey % ht->capacity;
+            if (p->hkey % old_cap != new_index)
             {
                 struct pair *tmp = p->next;
                 p->next = tmp->next;
@@ -53,32 +55,30 @@ struct pair *htab_get(struct htab *ht, char *key)
 {
     uint32_t searched = hash(key);
 
-    struct pair* tmp = ht->data[searched%ht->capacity].next;
+    struct pair *tmp = ht->data[searched % ht->capacity].next;
     while (tmp != NULL && tmp->hkey != searched && strcmp(key, tmp->key) != 0)
         tmp = tmp->next;
 
     return NULL;
 }
 
-
 int htab_insert(struct htab *ht, char *key, void *value)
 {
-    if(htab_get(ht, key)!=NULL)
+    if (htab_get(ht, key) != NULL)
         return 0;
-
 
     struct pair *i = malloc(sizeof(struct pair));
     i->key = key;
     i->value = value;
     i->hkey = hash(key);
 
-    i->next = ht->data[i->hkey%ht->capacity].next;
-    ht->data[i->hkey%ht->capacity].next=i;
+    i->next = ht->data[i->hkey % ht->capacity].next;
+    ht->data[i->hkey % ht->capacity].next = i;
 
-    if(i->next==NULL)
-        ht->size+=1;
+    if (i->next == NULL)
+        ht->size += 1;
 
-    if((ht->size+1)*100/ht->capacity>75)
+    if ((ht->size + 1) * 100 / ht->capacity > 75)
         htab_double_capacity(ht);
 
     return ht->capacity;
@@ -88,10 +88,10 @@ struct pair *htab_remove(struct htab *ht, char *key)
 {
     uint32_t search = hash(key);
 
-    struct pair *i = &ht->data[search%ht->capacity];
-    while(i->next!=NULL)
+    struct pair *i = &ht->data[search % ht->capacity];
+    while (i->next != NULL)
     {
-        if(i->next->hkey==search && i->next->key==key)
+        if (i->next->hkey == search && i->next->key == key)
         {
             struct pair *tmp = i->next;
             i->next = tmp->next;

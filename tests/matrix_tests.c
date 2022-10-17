@@ -1,13 +1,14 @@
-#include "../src/matrix/matrix.h"
+#include <criterion/criterion.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <criterion/criterion.h>
+
+#include "../src/matrix/matrix.h"
 
 Test(matrix_new, new_01)
 {
     struct matrix *mat = matrix_new(4, 3);
 
-    cr_assert(mat!=NULL);
+    cr_assert(mat != NULL);
 
     matrix_free(mat, &free);
 }
@@ -69,14 +70,13 @@ Test(matrix_add_col, col_3)
 
     cr_assert(mat->width == 6);
     cr_assert(mat->height == 3);
-    //cr_assert(*(int *)mat->data[14] == *x);
+    // cr_assert(*(int *)mat->data[14] == *x);
 
     matrix_free(mat, &free);
 }
 
 Test(matrix_put, put_01)
 {
-
     struct matrix *mat = matrix_new(3, 3);
 
     int x = 42;
@@ -89,7 +89,6 @@ Test(matrix_put, put_01)
 
 Test(matrix_put, put_02)
 {
-
     struct matrix *mat = matrix_new(3, 4);
 
     int x = 42;
@@ -102,7 +101,6 @@ Test(matrix_put, put_02)
 
 Test(matrix_put, put_oob)
 {
-
     struct matrix *mat = matrix_new(3, 4);
 
     int x = 42;
@@ -113,7 +111,6 @@ Test(matrix_put, put_oob)
 
 Test(matrix_get, get_01)
 {
-
     struct matrix *mat = matrix_new(3, 3);
 
     int x = 42;
@@ -126,7 +123,6 @@ Test(matrix_get, get_01)
 
 Test(matrix_get, get_02)
 {
-
     struct matrix *mat = matrix_new(3, 4);
 
     int x = 42;
@@ -139,7 +135,6 @@ Test(matrix_get, get_02)
 
 Test(matrix_get, get_oob)
 {
-
     struct matrix *mat = matrix_new(3, 3);
 
     int x = 42;
@@ -152,7 +147,6 @@ Test(matrix_get, get_oob)
 
 Test(matrix_transpose, same1)
 {
-
     struct matrix *mat = matrix_new(3, 3);
 
     int x = 42;
@@ -166,7 +160,6 @@ Test(matrix_transpose, same1)
 
 Test(matrix_transpose, same2)
 {
-
     struct matrix *mat = matrix_new(3, 4);
 
     int x = 42;
@@ -206,7 +199,6 @@ Test(matrix_transpose, diff2)
 
 Test(matrix_transpose, diff3)
 {
-
     struct matrix *mat = matrix_new(3, 4);
 
     int x = 42;

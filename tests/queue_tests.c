@@ -1,13 +1,14 @@
-#include "../src/queues/queue.h"
+#include <criterion/criterion.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <criterion/criterion.h>
+
+#include "../src/queues/queue.h"
 
 Test(queue_init, init01)
 {
     struct queue *q = queue_init();
 
-    cr_assert(q!=NULL);
+    cr_assert(q != NULL);
 
     queue_free(q, &free);
 }
@@ -16,7 +17,7 @@ Test(queue_init, init02)
 {
     struct queue *q = queue_init();
 
-    cr_assert(q!=NULL && q->newest==NULL);
+    cr_assert(q != NULL && q->newest == NULL);
 
     queue_free(q, &free);
 }
@@ -73,7 +74,7 @@ Test(queue_pop, pop_empty)
 {
     struct queue *q = queue_init();
 
-    cr_assert(queue_pop(q)==NULL);
+    cr_assert(queue_pop(q) == NULL);
 
     queue_free(q, &free);
 }
@@ -122,15 +123,15 @@ Test(queue_pop, pop_3)
 {
     struct queue *q = queue_init();
 
-    int v[5] = {42, 5, 7, 9, 3};
-    for(size_t i = 0; i<5; i++)
+    int v[5] = { 42, 5, 7, 9, 3 };
+    for (size_t i = 0; i < 5; i++)
         queue_push(q, &v[i], sizeof(int));
 
     int *ptr;
 
     cr_assert(!queue_is_empty(q));
 
-    for(size_t i = 0; i<5; i++)
+    for (size_t i = 0; i < 5; i++)
     {
         ptr = queue_pop(q);
         cr_assert(*ptr == v[i]);
