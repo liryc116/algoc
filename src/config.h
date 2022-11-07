@@ -5,14 +5,14 @@
 
 struct config
 {
-	char *pid_file;
-	char *log_file;
-	bool log;
-	char *server_name;
-	int port;
-	char *ip;
-	char *root_dir;
-	char *default_file;
+    char *pid_file;
+    char *log_file;
+    bool log;
+    char *server_name;
+    int port;
+    char *ip;
+    char *root_dir;
+    char *default_file;
 };
 
 struct config *parse_config_file(char *filepath);
