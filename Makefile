@@ -10,7 +10,8 @@ LDFLAGS += -fsanitize=address
 CFLAGS += -fsanitize=address
 
 BUILD := build
-TARGET := minimake
+BUILD_TEST := build
+TARGET := httpd
 TEST := test
 
 
@@ -47,9 +48,9 @@ $(BUILD)/%.o: ./%.c
 	$(CC) -c $(CFLAGS) $(CPPFLAGS) -o $@ $<
 
 $(TEST): $(TEST_O_FILES)
-	$(LD) -fsanitize=address -g $(LDFLAGS) $(LDLIBS) -o $@ $^
+	$(LD) -fsanitize=address -g -lcriterion $(LDFLAGS) $(LDLIBS) -o $@ $^
 
 $(BUILD_TEST)/%.o: ./%.c
-	$(CC) -fsanitize=address -g -c $(CFLAGS) $(CPPFLAGS) -o $@ $<
+	$(CC) -fsanitize=address -g -c -lcriterion $(CFLAGS) $(CPPFLAGS) $(LDLIBS) -o $@ $<
 
 -include $(D_FILES)
