@@ -32,7 +32,7 @@ check: $(TEST)
 	./$(TEST)
 
 format:
-	clang-format -i $(C_FILES) $(C_TEST_FILES)
+	clang-format -i $(C_FILES) $(C_TEST_FILES) $(shell find src/ tests/ -type f -name "*.h")
 
 clean:
 	${RM} -rf $(BUILD) $(TARGET) $(TEST)
