@@ -5,5 +5,5 @@
 // suppose perfect request
 struct request *parse_request()
 {
-	return NULL;
+    return NULL;
 }
