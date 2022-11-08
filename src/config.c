@@ -5,6 +5,7 @@
 // suppose perfect config
 struct config *parse_config_file(char *filepath)
 {
+	(void) filepath;
     return NULL;
 }
 

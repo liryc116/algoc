@@ -18,4 +18,5 @@ void launch_daemon(void)
     // fork
     // close child fd
     // terminate parent
+	server_loop();
 }
