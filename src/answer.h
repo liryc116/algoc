@@ -3,6 +3,8 @@
 
 #include <stddef.h>
 
+#include "request.h"
+
 struct answer
 {
     unsigned int status_code;
@@ -10,8 +12,8 @@ struct answer
     size_t len;
 };
 
-char *build_answer(void);
+struct answer *build_answer(struct request *request);
 
-void send_answer(void);
+void send_answer(struct request *request);
 
 #endif /* ! ANSWER_H */
