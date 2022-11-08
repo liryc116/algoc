@@ -1,6 +1,5 @@
 #include "request.h"
 
-#include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/socket.h>
@@ -21,6 +20,8 @@ struct request *parse_request(int socket)
     struct request *request = calloc(1, sizeof(struct request));
     char buffer[BUFFER_SIZE];
     ssize_t read_len = recv(socket, buffer, BUFFER_SIZE, 0);
+    if (read_len < 0)
+        return NULL;
     char *meth = strtok(buffer, " ");
     if (strcmp(meth, "GET") == 0)
         request->method = GET;
