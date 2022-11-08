@@ -48,9 +48,9 @@ $(BUILD)/%.o: ./%.c
 	$(CC) -c $(CFLAGS) $(CPPFLAGS) -o $@ $<
 
 $(TEST): $(TEST_O_FILES)
-	$(LD) -fsanitize=address -g -lcriterion $(LDFLAGS) $(LDLIBS) -o $@ $^
+	$(LD) -fsanitize=address -g -lcriterion -I./ $(LDFLAGS) $(LDLIBS) -o $@ $^
 
 $(BUILD_TEST)/%.o: ./%.c
-	$(CC) -fsanitize=address -g -c -lcriterion $(CFLAGS) $(CPPFLAGS) $(LDLIBS) -o $@ $<
+	$(CC) -fsanitize=address -g -c -lcriterion -I./ $(CFLAGS) $(CPPFLAGS) $(LDLIBS) -o $@ $<
 
 -include $(D_FILES)
