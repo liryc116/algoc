@@ -9,7 +9,7 @@ char *build_answer(void)
 {
     // write HTTP/1.1 status_code reason_phrase
     // Date: build_date()
-	build_date();
+    build_date();
     // Content-Length: stat(2)
     // Connectino: close
     // \r\n
